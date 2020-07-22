@@ -1,9 +1,10 @@
 from django.shortcuts import render,HttpResponseRedirect
-from Login.forms import CreateUser
+from Login.forms import CreateUser, EditProfile
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse,reverse_lazy
 from Login.models import UserProfile
+from django.contrib.auth.decorators import login_required
 
 
 # For User registration
@@ -18,6 +19,7 @@ def SignUp(request):
             user = form.save()
             registered = True
             user_profile = UserProfile(user=user)
+            user_profile.save()
             return HttpResponseRedirect(reverse('Login:login'))
 
     return render(request,'Login/signup.html',context={'title':'Sign Up','form':form})
@@ -41,3 +43,15 @@ def Login_page(request):
                 return HttpResponseRedirect(reverse('Login:login'))
 
     return render(request,'Login/login.html',context={'title':'Log In','form':form})
+
+# Edit profile
+@login_required
+
+def edit_profile(request):
+    current_user = UserProfile.objects.get(user=request.user)
+    form = EditProfile(instance=current_user)
+
+
+
+
+    return render(request,'Login/profile.html',context={'form':form})
