@@ -15,7 +15,8 @@ class CreateUser(UserCreationForm):
 
 
 class EditProfile(forms.ModelForm):
+    date_of_birth = forms.DateField(widget=forms.TextInput(attrs={'type':'date',}))
     class Meta:
         model = UserProfile
-        fields ='__all__'
+        exclude = ('user',)
 

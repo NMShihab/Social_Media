@@ -40,7 +40,7 @@ def Login_page(request):
 
             if user is not None:
                 login(request,user)
-                return HttpResponseRedirect(reverse('Login:login'))
+                return HttpResponseRedirect(reverse('Social:home'))
 
     return render(request,'Login/login.html',context={'title':'Log In','form':form})
 
@@ -48,10 +48,21 @@ def Login_page(request):
 @login_required
 
 def edit_profile(request):
-    current_user = UserProfile.objects.get(user=request.user)
+    current_user = request.user
+    #current_user = UserProfile.objects.get(user=request.user)
     form = EditProfile(instance=current_user)
 
+    if request.method == 'POST':
+        form = EditProfile(request.POST,request.FILES,instance=current_user)
+
+        if form.is_valid():
+            form.save(commit=True)
+            form = EditProfile(instance=current_user)
+
+    return render(request,'Login/profile.html',context={'form':form,'title':'Edit profile'})
 
 
-
-    return render(request,'Login/profile.html',context={'form':form})
+@login_required
+def logout_user(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('Login:login'))
