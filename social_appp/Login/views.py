@@ -46,10 +46,11 @@ def Login_page(request):
 
 # Edit profile
 @login_required
-
 def edit_profile(request):
-    current_user = request.user
+    current_user = UserProfile.objects.get(user=request.user)
+    #current_user = request.user
     #current_user = UserProfile.objects.get(user=request.user)
+   
     form = EditProfile(instance=current_user)
 
     if request.method == 'POST':
@@ -58,6 +59,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save(commit=True)
             form = EditProfile(instance=current_user)
+            return HttpResponseRedirect(reverse('Social:home'))
 
     return render(request,'Login/profile.html',context={'form':form,'title':'Edit profile'})
 

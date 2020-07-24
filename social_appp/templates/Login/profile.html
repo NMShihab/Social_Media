@@ -5,7 +5,7 @@
 
 {% block body %}
 <form method="POST" enctype="multipart/form-data">
-    {{form|crispy}}
+    {{ form|crispy}}
     {% csrf_token %}
 
     <button type="submit" class="btn btn-primary" >Submit</button>
