@@ -65,3 +65,9 @@ def edit_profile(request):
 def logout_user(request):
     logout(request)
     return HttpResponseRedirect(reverse('Login:login'))
+
+
+@login_required
+
+def Profile(request):
+    return render(request,'Login/user.html',context={'title':'Profile'})
