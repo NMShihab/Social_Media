@@ -6,14 +6,14 @@
 
 {% block body %}
 <center>
-  <div style="width:500px; border: 1px solid #ccc; padding: 40px;">
+  <div style="width:500px; border: 1px solid #ccc; padding: 100px;">
     <h3>Log In Here</h3>
 
     <form method="POST">
       {{form|crispy}}
       {% csrf_token %}
 
-      <button type="submit" class="btn btn-primary" style="width:100%">Log In</button>
+      <button type="submit" class="btn btn-primary" style="width:100%;">Log In</button>
 
     </form>
 

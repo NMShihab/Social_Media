@@ -1,11 +1,10 @@
 from django.shortcuts import render,HttpResponseRedirect
-from Login.forms import CreateUser, EditProfile
+from Login.forms import CreateUser, EditProfile, SignIn
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse,reverse_lazy
 from Login.models import UserProfile
 from django.contrib.auth.decorators import login_required
-
 
 # For User registration
 
@@ -27,9 +26,11 @@ def SignUp(request):
 # for login
 
 def Login_page(request):
-    form = AuthenticationForm()
+    #form = AuthenticationForm()
+    form = SignIn()
     if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
+        #form = AuthenticationForm(data=request.POST)
+        form = SignIn(data=request.POST) 
 
         if form.is_valid():
             username = form.cleaned_data.get('username')
