@@ -5,6 +5,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse,reverse_lazy
 from Login.models import UserProfile
 from django.contrib.auth.decorators import login_required
+from Social.forms import Post_form
 
 # For User registration
 
@@ -71,4 +72,17 @@ def logout_user(request):
 @login_required
 
 def Profile(request):
-    return render(request,'Login/user.html',context={'title':'Profile'})
+    form = Post_form()
+
+    if request.method =='POST':
+        form = Post_form(request.POST,request.FILES)
+
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            post.save()
+
+            return HttpResponseRedirect(reverse('Social:home'))
+
+
+    return render(request,'Login/user.html',context={'title':'Profile','form':form})
