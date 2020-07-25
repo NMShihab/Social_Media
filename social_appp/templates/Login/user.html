@@ -58,6 +58,13 @@
     </div>
   </div>
   
+  <div class="row">
+    {% for post in user.post.all %}
+    <img src="/media/{{post.image}}" style="width: 250px;height: 250px; overflow: hidden; padding: 20px;">
+
+    {% endfor %}
+
+  </div>
   
 
 {% endblock %}
