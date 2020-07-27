@@ -6,6 +6,7 @@ from django.urls import reverse,reverse_lazy
 from Login.models import UserProfile
 from django.contrib.auth.decorators import login_required
 from Social.forms import Post_form
+from django.contrib.auth.models import  User
 
 # For User registration
 
@@ -86,3 +87,13 @@ def Profile(request):
 
 
     return render(request,'Login/user.html',context={'title':'Profile','form':form})
+
+
+@login_required
+def user(request,username):
+    user_other = User.objects.get(username=username)
+
+    if user_other == request.user:
+        return HttpResponseRedirect(reverse('Login:profile'))
+    
+    return render(request,'Login/user_public.html',context={'user_other':user_other})

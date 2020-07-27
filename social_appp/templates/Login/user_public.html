@@ -1,0 +1,37 @@
+{% extends 'navbar.html' %}
+
+{% block title %} @{{user.username}}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-sm-4">
+
+        {% if user_other.user_profile.profile_pic %}
+        <img src="/media/{{user_other.user_profile.profile_pic}}" style=" width:250px; height:250px; class:rounded-circle;">
+        {% else %}
+        <img src="/media/profile_pic.png" style=" width:250px; height:250px; class:rounded-circle;">
+        {% endif %}
+    </div>
+
+    <div class="col-sm-8">
+        <h1>{{ user_other.username}} &nbsp; <a href="" class="btn btn-light">Follow</a></h1>
+        <br>
+
+        <h3>{{user_other.post.count}} posts &nbsp; &nbsp; {{user_other.following.count}} followers &nbsp; &nbsp; {{user_other.follower.count}} following</h3>
+
+    </div>
+</div>
+<hr>
+
+<div class="row">
+    {% for post in user_other.post.all %}
+    <img src="/media/{{post.image}}" style="width: 250px;height: 250px; overflow: hidden; padding: 20px;">
+
+    {% endfor %}
+
+  </div>
+
+
+
+
+{% endblock %}
