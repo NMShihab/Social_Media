@@ -10,40 +10,22 @@
             <div class="col-sm-2">
                 {% if user.user_profile.profile_pic %}
                     <img src="/media/{{user.user_profile.profile_pic}}" style="width: 100px;height: 100px;" 
-                    class="round-circle">
-                    
-
+                    class="round-circle">                   
                 {% else %}
                     <img src="/media/profile_pic.png" style="width: 100px;height: 100px;" class="round-circle">
-                    
-
                 {% endif %}
-
                 <hr>
-
             </div>
-
             <div class="col-sm-10">
                <a href="{% url 'Login:user' username=user.username %}">{{user.username}}</a>
-
-
             </div>
-
-        </div>
-       
-
-
-        
-        
-
+         </div>        
     {% endfor %}
     
 
 {% else %}
         <div class="row">
-            <div class="col-sm-8">
-
-                
+            <div class="col-sm-8">               
                 {% for post in posts %}
                     <div class="row" style="border: 1px solid #888888;">
                         <div style="padding: 10px;">
@@ -56,7 +38,21 @@
                             <a href="{% url 'Login:user' username=post.author %}">{{post.author}}</a>
                         </div>
                         <br>
+                        <br>
+                        {{post.caption}}<br>
                         <img src="/media/{{post.image}}" width="100%">
+                        
+
+                        <div style="padding:20px;">
+                            
+                            {{ post.liked_post.count }} Likes <br>
+                            {% if post.pk in liked_post_list %}
+                                <a href="{% url 'Social:unliked' pk=post.pk %}"><i class="fa fa-heart" style="font-size:36px;"></i></a>
+                            {% else %}
+                                <a href="{% url 'Social:liked' pk=post.pk %}"><i class="fa fa-heart-o" style="font-size:36px;"></i></a>
+                            {% endif %}
+
+                        </div>
                     </div>
                     <br>
                     <br>
